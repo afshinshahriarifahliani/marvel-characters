@@ -3,7 +3,7 @@ package com.afshinshahriarifahliani.marvel_characters.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ApiResponse(
+data class MarvelApiResponse(
     @SerializedName("attributionHTML")
     val attributionHTML: String,
     @SerializedName("attributionText")
@@ -13,7 +13,7 @@ data class ApiResponse(
     @SerializedName("copyright")
     val copyright: String,
     @SerializedName("data")
-    val `data`: Data,
+    val data: Data,
     @SerializedName("etag")
     val etag: String,
     @SerializedName("status")

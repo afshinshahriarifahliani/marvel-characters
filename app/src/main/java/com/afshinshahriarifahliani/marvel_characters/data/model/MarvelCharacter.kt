@@ -2,8 +2,9 @@ package com.afshinshahriarifahliani.marvel_characters.data.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-data class Result(
+data class MarvelCharacter(
     @SerializedName("comics")
     val comics: Comics,
     @SerializedName("description")
@@ -26,4 +27,4 @@ data class Result(
     val thumbnail: Thumbnail,
     @SerializedName("urls")
     val urls: List<Url>
-)
+): Serializable

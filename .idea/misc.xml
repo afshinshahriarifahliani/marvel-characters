@@ -3,7 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android-projects/marvel-characters/app/src/main/res/drawable/ic_comics.xml" value="0.2685" />
+        <entry key="..\:/android-projects/marvel-characters/app/src/main/res/drawable/ic_favorite.xml" value="0.1" />
+        <entry key="..\:/android-projects/marvel-characters/app/src/main/res/drawable/ic_not_favorite.xml" value="0.1" />
+        <entry key="..\:/android-projects/marvel-characters/app/src/main/res/font/lobster_two.xml" value="0.29791666666666666" />
+        <entry key="..\:/android-projects/marvel-characters/app/src/main/res/font/roboto_thin.xml" value="0.296875" />
         <entry key="..\:/android-projects/marvel-characters/app/src/main/res/layout/activity_main.xml" value="0.4161458333333333" />
+        <entry key="..\:/android-projects/marvel-characters/app/src/main/res/layout/character_cardview.xml" value="0.5142857142857143" />
+        <entry key="..\:/android-projects/marvel-characters/app/src/main/res/layout/fragment_character_info.xml" value="0.4161458333333333" />
+        <entry key="..\:/android-projects/marvel-characters/app/src/main/res/layout/fragment_characters.xml" value="0.21041666666666667" />
+        <entry key="..\:/android-projects/marvel-characters/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2875" />
       </map>
     </option>
   </component>
