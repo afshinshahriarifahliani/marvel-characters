@@ -8,16 +8,18 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.afshinshahriarifahliani.marvel_characters.MainActivity
+import com.afshinshahriarifahliani.marvel_characters.data.model.characters.MarvelCharacter
 import com.afshinshahriarifahliani.marvel_characters.databinding.FragmentCharacterInfoBinding
 import com.afshinshahriarifahliani.marvel_characters.presentation.viewmodel.MarvelViewModel
 import com.afshinshahriarifahliani.marvel_characters.util.Resource
+import com.google.android.material.snackbar.Snackbar
 
 class CharacterInfoFragment(private val characterId: Int) : Fragment() {
 
     private lateinit var characterInfoViewModel: MarvelViewModel
     private var _binding: FragmentCharacterInfoBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var character: MarvelCharacter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,7 +40,7 @@ class CharacterInfoFragment(private val characterId: Int) : Fragment() {
                 is Resource.Success -> {
 
                     response.data?.let {
-                        val character = it.data.characters[0]
+                        character = it.data.characters[0]
                         binding.characterWebView.apply {
                             webViewClient = WebViewClient()
                             loadUrl(character.urls[0].url)
@@ -62,10 +64,11 @@ class CharacterInfoFragment(private val characterId: Int) : Fragment() {
         }
 
 
-//        binding.fabFavorite.setOnClickListener {
-//            characterInfoViewModel.saveCharacter(character)
-//            Snackbar.make(view,"Saved Successfully!", Snackbar.LENGTH_LONG).show()
-//        }
+        binding.fabFavorite.setOnClickListener {
+            characterInfoViewModel.addToFavorites(character)
+            Snackbar.make(view, "Character added to favorites successfully", Snackbar.LENGTH_LONG)
+                .show()
+        }
     }
 
     override fun onDestroyView() {

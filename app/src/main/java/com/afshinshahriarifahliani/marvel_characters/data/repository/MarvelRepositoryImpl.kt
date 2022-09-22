@@ -53,8 +53,8 @@ class MarvelRepositoryImpl(
         )
     }
 
-    override suspend fun saveFavoriteCharacter() {
-        TODO("Not yet implemented")
+    override suspend fun saveFavoriteCharacter(character:MarvelCharacter) {
+        return localDatasource.saveFavoriteCharacter(character)
     }
 
     override suspend fun saveAllCharacters(characters: List<MarvelCharacter>) {
@@ -63,6 +63,10 @@ class MarvelRepositoryImpl(
 
     override fun getAllSavedCharacters(): Flow<List<MarvelCharacter>> {
         return localDatasource.getAllSavedCharacters()
+    }
+
+    override suspend fun deleteSavedCharacter(character: MarvelCharacter) {
+        return localDatasource.deleteSavedCharacter(character)
     }
 
     private fun <T> convertResponseToResource(response: Response<T>): Resource<T> {

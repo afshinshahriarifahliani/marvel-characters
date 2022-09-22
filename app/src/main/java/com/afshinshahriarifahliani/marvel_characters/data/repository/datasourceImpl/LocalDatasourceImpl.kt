@@ -13,4 +13,12 @@ class LocalDatasourceImpl(private val marvelDao: MarvelDao) : LocalDatasource {
     override fun getAllSavedCharacters(): Flow<List<MarvelCharacter>> {
       return marvelDao.getAllSavedCharacters()
     }
+
+    override suspend fun saveFavoriteCharacter(character: MarvelCharacter) {
+        marvelDao.saveFavoriteCharacter(character)
+    }
+
+    override suspend fun deleteSavedCharacter(character: MarvelCharacter) {
+        marvelDao.deleteSavedCharacter(character)
+    }
 }

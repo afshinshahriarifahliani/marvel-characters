@@ -10,4 +10,6 @@ import kotlinx.coroutines.flow.Flow
 interface LocalDatasource {
     suspend fun saveAllCharacters(characters:List<MarvelCharacter>)
     fun getAllSavedCharacters(): Flow<List<MarvelCharacter>>
+    suspend fun saveFavoriteCharacter(character: MarvelCharacter)
+    suspend fun deleteSavedCharacter(character: MarvelCharacter)
 }

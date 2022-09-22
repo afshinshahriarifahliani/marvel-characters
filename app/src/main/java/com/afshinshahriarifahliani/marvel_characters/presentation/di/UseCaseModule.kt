@@ -53,4 +53,22 @@ class UseCaseModule {
     fun provideSearchCharacterNameToStartWith(repository: MarvelRepository): SearchCharacterNameToStartWithUseCase {
         return SearchCharacterNameToStartWithUseCase(repository)
     }
+
+    @Singleton
+    @Provides
+    fun provideSaveFavoriteCharacter(repository: MarvelRepository): SaveFavoriteCharacterUseCase {
+        return SaveFavoriteCharacterUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetAllSavedCharacters(repository: MarvelRepository): GetAllSavedCharactersUseCase {
+        return GetAllSavedCharactersUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteSavedCharacter(repository: MarvelRepository): DeleteSavedCharacterUseCase {
+        return DeleteSavedCharacterUseCase(repository)
+    }
 }

@@ -14,6 +14,9 @@ class MarvelViewModelFactory(
     private val getCharacterEventsUseCase: GetCharacterEventsUseCase,
     private val getCharacterStoriesUseCase: GetCharacterStoriesUseCase,
     private val searchCharacterNameToStartWithUseCase: SearchCharacterNameToStartWithUseCase,
+    private val saveFavoriteCharacterUseCase: SaveFavoriteCharacterUseCase,
+    private val getAllSavedCharactersUseCase: GetAllSavedCharactersUseCase,
+    private val deleteSavedCharacterUseCase: DeleteSavedCharacterUseCase
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -26,7 +29,10 @@ class MarvelViewModelFactory(
                 getCharacterSeriesUseCase,
                 getCharacterEventsUseCase,
                 getCharacterStoriesUseCase,
-                searchCharacterNameToStartWithUseCase
+                searchCharacterNameToStartWithUseCase,
+                saveFavoriteCharacterUseCase,
+                getAllSavedCharactersUseCase,
+                deleteSavedCharacterUseCase
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

@@ -23,7 +23,10 @@ class FactoryModule {
         getCharacterSeriesUseCase: GetCharacterSeriesUseCase,
         getCharacterEventsUseCase: GetCharacterEventsUseCase,
         getCharacterStoriesUseCase: GetCharacterStoriesUseCase,
-        searchCharacterNameToStartWithUseCase:SearchCharacterNameToStartWithUseCase
+        searchCharacterNameToStartWithUseCase:SearchCharacterNameToStartWithUseCase,
+        saveFavoriteCharacterUseCase: SaveFavoriteCharacterUseCase,
+        getAllSavedCharactersUseCase: GetAllSavedCharactersUseCase,
+        deleteSavedCharacterUseCase: DeleteSavedCharacterUseCase
     ): MarvelViewModelFactory {
         return MarvelViewModelFactory(
             app,
@@ -33,7 +36,10 @@ class FactoryModule {
             getCharacterSeriesUseCase,
             getCharacterEventsUseCase,
             getCharacterStoriesUseCase,
-            searchCharacterNameToStartWithUseCase
+            searchCharacterNameToStartWithUseCase,
+            saveFavoriteCharacterUseCase,
+            getAllSavedCharactersUseCase,
+            deleteSavedCharacterUseCase
         )
     }
 }

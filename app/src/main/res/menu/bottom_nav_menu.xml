@@ -7,9 +7,8 @@
         android:title="@string/title_characters" />
 
     <item
-        android:id="@+id/navigation_comics"
-        android:icon="@drawable/ic_comics"
-        android:title="@string/title_comics" />
-
+        android:id="@+id/navigation_favorites"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/title_favorites" />
 
 </menu>

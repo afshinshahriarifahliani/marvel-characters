@@ -1,7 +1,6 @@
 package com.afshinshahriarifahliani.marvel_characters.presentation.ui.characters
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.AbsListView
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,13 +16,12 @@ import com.afshinshahriarifahliani.marvel_characters.MainActivity
 import com.afshinshahriarifahliani.marvel_characters.R
 import com.afshinshahriarifahliani.marvel_characters.databinding.FragmentCharactersBinding
 import com.afshinshahriarifahliani.marvel_characters.presentation.adapter.CharacterAdapter
+import com.afshinshahriarifahliani.marvel_characters.presentation.ui.favorites.FavoritesFragmentDirections
 import com.afshinshahriarifahliani.marvel_characters.presentation.viewmodel.MarvelViewModel
 import com.afshinshahriarifahliani.marvel_characters.util.LIMIT
 import com.afshinshahriarifahliani.marvel_characters.util.OFFSET
 import com.afshinshahriarifahliani.marvel_characters.util.Resource
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class CharactersFragment : Fragment() {
 
@@ -60,13 +59,8 @@ class CharactersFragment : Fragment() {
         marvelViewModel = (activity as MainActivity).marvelViewModel
         characterAdapter = (activity as MainActivity).characterAdapter
         characterAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("selected_character", it)
-            }
-            findNavController().navigate(
-                R.id.action_navigation_characters_to_navigation_character_details,
-                bundle
-            )
+            val action = CharactersFragmentDirections.actionNavigationCharactersToNavigationCharacterDetails(it)
+            findNavController().navigate(action)
         }
         initRecyclerView()
         viewCharactersList()
@@ -77,7 +71,6 @@ class CharactersFragment : Fragment() {
             viewCharactersList()
             swipe.isRefreshing = false
         }
-
 
     }
 
@@ -121,7 +114,6 @@ class CharactersFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@CharactersFragment.onScrollListener)
         }
-
     }
 
     private fun showProgressBar() {
@@ -140,7 +132,6 @@ class CharactersFragment : Fragment() {
             if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                 isScrolling = true
             }
-
         }
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -156,17 +147,14 @@ class CharactersFragment : Fragment() {
                 offset += LIMIT
                 marvelViewModel.getAllCharacters(offset)
                 isScrolling = false
-
             }
-
-
         }
     }
 
     //search
-    private fun setSearchView(){
+    private fun setSearchView() {
         binding.characterSearchView.setOnQueryTextListener(
-            object : SearchView.OnQueryTextListener{
+            object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     marvelViewModel.searchCharacterNameToStartWithUseCase(query.toString(), OFFSET)
                     viewCharacterSearchedResult()
@@ -174,14 +162,16 @@ class CharactersFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(query: String?): Boolean {
-                    MainScope().launch {
+                    lifecycleScope.launchWhenCreated {
                         delay(2000)
-                        marvelViewModel.searchCharacterNameToStartWithUseCase(query.toString(), OFFSET)
+                        marvelViewModel.searchCharacterNameToStartWithUseCase(
+                            query.toString(),
+                            OFFSET
+                        )
                         viewCharacterSearchedResult()
                     }
                     return false
                 }
-
             })
 
         binding.characterSearchView.setOnCloseListener {
@@ -191,10 +181,7 @@ class CharactersFragment : Fragment() {
         }
     }
 
-
-
-
-    fun viewCharacterSearchedResult(){
+    fun viewCharacterSearchedResult() {
         marvelViewModel.characterSearchResult.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {

@@ -18,8 +18,9 @@ interface MarvelRepository {
     suspend fun getCharacterEvents(characterId:Int): Resource<EventsResponse>
     suspend fun getCharacterStories(characterId:Int): Resource<StoriesResponse>
     suspend fun searchCharacterNameToStartWith(query:String,offset: Int?): Resource<MarvelApiResponse>
-    suspend fun saveFavoriteCharacter()
+    suspend fun saveFavoriteCharacter(character:MarvelCharacter)
     suspend fun saveAllCharacters(characters:List<MarvelCharacter>)
     fun getAllSavedCharacters(): Flow<List<MarvelCharacter>>
+    suspend fun deleteSavedCharacter(character: MarvelCharacter)
 
 }

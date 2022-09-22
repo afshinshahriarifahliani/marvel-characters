@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">marvel-characters</string>
     <string name="title_characters">Characters</string>
+    <string name="title_favorites">Favorites</string>
     <string name="title_comics">Comics</string>
     <string name="title_series">Series</string>
     <string name="title_events">Events</string>

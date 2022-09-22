@@ -1,11 +1,9 @@
 package com.afshinshahriarifahliani.marvel_characters.presentation.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.afshinshahriarifahliani.marvel_characters.data.model.characters.MarvelApiResponse
+import com.afshinshahriarifahliani.marvel_characters.data.model.characters.MarvelCharacter
 import com.afshinshahriarifahliani.marvel_characters.data.model.comics.ComicResponse
 import com.afshinshahriarifahliani.marvel_characters.data.model.events.EventsResponse
 import com.afshinshahriarifahliani.marvel_characters.data.model.series.SeriesResponse
@@ -24,43 +22,59 @@ class MarvelViewModel(
     private val getCharacterSeriesUseCase: GetCharacterSeriesUseCase,
     private val getCharacterEventsUseCase: GetCharacterEventsUseCase,
     private val getCharacterStoriesUseCase: GetCharacterStoriesUseCase,
-    private val searchCharacterNameToStartWithUseCase: SearchCharacterNameToStartWithUseCase
+    private val searchCharacterNameToStartWithUseCase: SearchCharacterNameToStartWithUseCase,
+    private val saveFavoriteCharacterUseCase: SaveFavoriteCharacterUseCase,
+    private val getAllSavedCharactersUseCase:GetAllSavedCharactersUseCase,
+    private val deleteSavedCharacterUseCase:DeleteSavedCharacterUseCase
 ) : AndroidViewModel(app) {
 
 
     private val _characters: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
-    val characters:LiveData<Resource<MarvelApiResponse>> = _characters
+    val characters: LiveData<Resource<MarvelApiResponse>> = _characters
     private val _singleCharacter: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
-    val singleCharacter:LiveData<Resource<MarvelApiResponse>> = _singleCharacter
+    val singleCharacter: LiveData<Resource<MarvelApiResponse>> = _singleCharacter
     private val _comics: MutableLiveData<Resource<ComicResponse>> = MutableLiveData()
-    val comics:LiveData<Resource<ComicResponse>> = _comics
+    val comics: LiveData<Resource<ComicResponse>> = _comics
     private val _series: MutableLiveData<Resource<SeriesResponse>> = MutableLiveData()
-    val series:LiveData<Resource<SeriesResponse>> = _series
+    val series: LiveData<Resource<SeriesResponse>> = _series
     private val _events: MutableLiveData<Resource<EventsResponse>> = MutableLiveData()
-    val events:LiveData<Resource<EventsResponse>> = _events
+    val events: LiveData<Resource<EventsResponse>> = _events
     private val _stories: MutableLiveData<Resource<StoriesResponse>> = MutableLiveData()
-    val stories:LiveData<Resource<StoriesResponse>> = _stories
-    private val _characterSearchResult: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
-    val characterSearchResult:LiveData<Resource<MarvelApiResponse>> = _characterSearchResult
+    val stories: LiveData<Resource<StoriesResponse>> = _stories
+    private val _characterSearchResult: MutableLiveData<Resource<MarvelApiResponse>> =
+        MutableLiveData()
+    val characterSearchResult: LiveData<Resource<MarvelApiResponse>> = _characterSearchResult
 
-fun searchCharacterNameToStartWithUseCase(query:String , offset:Int?)= viewModelScope.launch(Dispatchers.IO) {
-    _characterSearchResult.postValue(Resource.Loading())
-    try {
-        if (isNetworkAvailable(app)) {
-
-            val apiResult = searchCharacterNameToStartWithUseCase.execute(query,offset)
-            _characterSearchResult.postValue(apiResult)
-        } else {
-            _characterSearchResult.postValue(Resource.Error("Network is not available"))
+    fun getAllSavedCharacters() = liveData{
+        getAllSavedCharactersUseCase.execute().collect {
+            emit(it)
         }
-
-    } catch (e: Exception) {
-        _characterSearchResult.postValue(Resource.Error(e.message.toString()))
     }
 
-}
+    fun deleteArticle(character: MarvelCharacter) = viewModelScope.launch {
+        deleteSavedCharacterUseCase.execute(character)
+    }
 
-    fun getCharacterSeries(characterId:Int) = viewModelScope.launch(Dispatchers.IO) {
+
+    fun searchCharacterNameToStartWithUseCase(query: String, offset: Int?) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _characterSearchResult.postValue(Resource.Loading())
+            try {
+                if (isNetworkAvailable(app)) {
+
+                    val apiResult = searchCharacterNameToStartWithUseCase.execute(query, offset)
+                    _characterSearchResult.postValue(apiResult)
+                } else {
+                    _characterSearchResult.postValue(Resource.Error("Network is not available"))
+                }
+
+            } catch (e: Exception) {
+                _characterSearchResult.postValue(Resource.Error(e.message.toString()))
+            }
+
+        }
+
+    fun getCharacterSeries(characterId: Int) = viewModelScope.launch(Dispatchers.IO) {
         _series.postValue(Resource.Loading())
         try {
             if (isNetworkAvailable(app)) {
@@ -76,7 +90,7 @@ fun searchCharacterNameToStartWithUseCase(query:String , offset:Int?)= viewModel
         }
     }
 
-    fun getCharacterComics(characterId:Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun getCharacterComics(characterId: Int) = viewModelScope.launch(Dispatchers.IO) {
         _comics.postValue(Resource.Loading())
         try {
             if (isNetworkAvailable(app)) {
@@ -92,7 +106,7 @@ fun searchCharacterNameToStartWithUseCase(query:String , offset:Int?)= viewModel
         }
     }
 
-    fun getCharacterEvents(characterId:Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun getCharacterEvents(characterId: Int) = viewModelScope.launch(Dispatchers.IO) {
         _events.postValue(Resource.Loading())
         try {
             if (isNetworkAvailable(app)) {
@@ -108,7 +122,7 @@ fun searchCharacterNameToStartWithUseCase(query:String , offset:Int?)= viewModel
         }
     }
 
-    fun getCharacterStories(characterId:Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun getCharacterStories(characterId: Int) = viewModelScope.launch(Dispatchers.IO) {
         _stories.postValue(Resource.Loading())
         try {
             if (isNetworkAvailable(app)) {
@@ -124,7 +138,7 @@ fun searchCharacterNameToStartWithUseCase(query:String , offset:Int?)= viewModel
         }
     }
 
-    fun getSingleCharacterById(characterId:Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun getSingleCharacterById(characterId: Int) = viewModelScope.launch(Dispatchers.IO) {
         _singleCharacter.postValue(Resource.Loading())
         try {
             if (isNetworkAvailable(app)) {
@@ -155,6 +169,10 @@ fun searchCharacterNameToStartWithUseCase(query:String , offset:Int?)= viewModel
             _characters.postValue(Resource.Error(e.message.toString()))
         }
 
+    }
+
+    fun addToFavorites(character: MarvelCharacter) = viewModelScope.launch(Dispatchers.IO) {
+        saveFavoriteCharacterUseCase.execute(character)
     }
 
 }

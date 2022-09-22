@@ -41,7 +41,15 @@
         android:label="@string/title_character_info"
         tools:layout="@layout/fragment_character_info">
     </fragment>
-
+    <fragment
+        android:id="@+id/navigation_favorites"
+        android:name="com.afshinshahriarifahliani.marvel_characters.presentation.ui.favorites.FavoritesFragment"
+        android:label="@string/title_favorites"
+        tools:layout="@layout/fragment_characters">
+        <action
+            android:id="@+id/action_navigation_favorites_to_navigation_character_details"
+            app:destination="@id/navigation_character_details" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_character_details"
         android:name="com.afshinshahriarifahliani.marvel_characters.presentation.ui.characterDetails.CharacterDetailsFragment"
