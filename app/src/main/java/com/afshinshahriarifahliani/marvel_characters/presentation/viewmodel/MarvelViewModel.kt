@@ -23,7 +23,8 @@ class MarvelViewModel(
     private val getCharacterComicsUseCase: GetCharacterComicsUseCase,
     private val getCharacterSeriesUseCase: GetCharacterSeriesUseCase,
     private val getCharacterEventsUseCase: GetCharacterEventsUseCase,
-    private val getCharacterStoriesUseCase: GetCharacterStoriesUseCase
+    private val getCharacterStoriesUseCase: GetCharacterStoriesUseCase,
+    private val searchCharacterNameToStartWithUseCase: SearchCharacterNameToStartWithUseCase
 ) : AndroidViewModel(app) {
 
 
@@ -39,8 +40,25 @@ class MarvelViewModel(
     val events:LiveData<Resource<EventsResponse>> = _events
     private val _stories: MutableLiveData<Resource<StoriesResponse>> = MutableLiveData()
     val stories:LiveData<Resource<StoriesResponse>> = _stories
+    private val _characterSearchResult: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
+    val characterSearchResult:LiveData<Resource<MarvelApiResponse>> = _characterSearchResult
 
+fun searchCharacterNameToStartWithUseCase(query:String , offset:Int?)= viewModelScope.launch(Dispatchers.IO) {
+    _characterSearchResult.postValue(Resource.Loading())
+    try {
+        if (isNetworkAvailable(app)) {
 
+            val apiResult = searchCharacterNameToStartWithUseCase.execute(query,offset)
+            _characterSearchResult.postValue(apiResult)
+        } else {
+            _characterSearchResult.postValue(Resource.Error("Network is not available"))
+        }
+
+    } catch (e: Exception) {
+        _characterSearchResult.postValue(Resource.Error(e.message.toString()))
+    }
+
+}
 
     fun getCharacterSeries(characterId:Int) = viewModelScope.launch(Dispatchers.IO) {
         _series.postValue(Resource.Loading())

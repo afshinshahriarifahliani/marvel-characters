@@ -1,10 +1,12 @@
 package com.afshinshahriarifahliani.marvel_characters.presentation.ui.characters
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,6 +20,9 @@ import com.afshinshahriarifahliani.marvel_characters.presentation.viewmodel.Marv
 import com.afshinshahriarifahliani.marvel_characters.util.LIMIT
 import com.afshinshahriarifahliani.marvel_characters.util.OFFSET
 import com.afshinshahriarifahliani.marvel_characters.util.Resource
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CharactersFragment : Fragment() {
 
@@ -65,6 +70,7 @@ class CharactersFragment : Fragment() {
         }
         initRecyclerView()
         viewCharactersList()
+        setSearchView()
         val swipe = binding.swipeToRefresh
         swipe.setOnRefreshListener {
             offset += LIMIT
@@ -72,7 +78,7 @@ class CharactersFragment : Fragment() {
             swipe.isRefreshing = false
         }
 
-        //   setSearchView()
+
     }
 
     private fun viewCharactersList() {
@@ -156,4 +162,68 @@ class CharactersFragment : Fragment() {
 
         }
     }
+
+    //search
+    private fun setSearchView(){
+        binding.characterSearchView.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    marvelViewModel.searchCharacterNameToStartWithUseCase(query.toString(), OFFSET)
+                    viewCharacterSearchedResult()
+                    return false
+                }
+
+                override fun onQueryTextChange(query: String?): Boolean {
+                    MainScope().launch {
+                        delay(2000)
+                        marvelViewModel.searchCharacterNameToStartWithUseCase(query.toString(), OFFSET)
+                        viewCharacterSearchedResult()
+                    }
+                    return false
+                }
+
+            })
+
+        binding.characterSearchView.setOnCloseListener {
+            initRecyclerView()
+            viewCharacterSearchedResult()
+            false
+        }
+    }
+
+
+
+
+    fun viewCharacterSearchedResult(){
+        marvelViewModel.characterSearchResult.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    hideProgressBar()
+                    response.data?.let {
+                        characterAdapter.swapData(it.data.characters.toList())
+                        pages = if (it.data.total % LIMIT == 0) {
+                            it.data.total / LIMIT
+                        } else {
+                            it.data.total / LIMIT + 1
+                        }
+                        isLastPage = (offset >= pages * LIMIT)
+                    }
+                }
+                is Resource.Error -> {
+                    hideProgressBar()
+                    response.message?.let {
+                        Toast.makeText(activity, "An error occurred : $it", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
+
+                else -> {}
+            }
+        }
+    }
+
 }

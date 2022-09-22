@@ -47,4 +47,10 @@ class UseCaseModule {
     fun provideGetCharacterStoriesUseCase(repository: MarvelRepository): GetCharacterStoriesUseCase {
         return GetCharacterStoriesUseCase(repository)
     }
+
+    @Singleton
+    @Provides
+    fun provideSearchCharacterNameToStartWith(repository: MarvelRepository): SearchCharacterNameToStartWithUseCase {
+        return SearchCharacterNameToStartWithUseCase(repository)
+    }
 }

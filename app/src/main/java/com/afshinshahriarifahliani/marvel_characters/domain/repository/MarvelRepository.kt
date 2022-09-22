@@ -8,6 +8,7 @@ import com.afshinshahriarifahliani.marvel_characters.data.model.series.SeriesRes
 import com.afshinshahriarifahliani.marvel_characters.data.model.stories.StoriesResponse
 import com.afshinshahriarifahliani.marvel_characters.util.Resource
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 
 interface MarvelRepository {
     suspend fun getAllCharacters(offset: Int?): Resource<MarvelApiResponse>
@@ -16,6 +17,7 @@ interface MarvelRepository {
     suspend fun getCharacterSeries(characterId:Int): Resource<SeriesResponse>
     suspend fun getCharacterEvents(characterId:Int): Resource<EventsResponse>
     suspend fun getCharacterStories(characterId:Int): Resource<StoriesResponse>
+    suspend fun searchCharacterNameToStartWith(query:String,offset: Int?): Resource<MarvelApiResponse>
     suspend fun saveFavoriteCharacter()
     suspend fun saveAllCharacters(characters:List<MarvelCharacter>)
     fun getAllSavedCharacters(): Flow<List<MarvelCharacter>>

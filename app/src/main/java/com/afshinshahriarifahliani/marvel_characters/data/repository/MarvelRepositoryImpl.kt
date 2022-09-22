@@ -8,12 +8,15 @@ import com.afshinshahriarifahliani.marvel_characters.data.model.series.SeriesRes
 import com.afshinshahriarifahliani.marvel_characters.data.model.stories.StoriesResponse
 import com.afshinshahriarifahliani.marvel_characters.data.repository.datasource.LocalDatasource
 import com.afshinshahriarifahliani.marvel_characters.data.repository.datasource.RemoteDatasource
-import com.afshinshahriarifahliani.marvel_characters.util.Resource
 import com.afshinshahriarifahliani.marvel_characters.domain.repository.MarvelRepository
+import com.afshinshahriarifahliani.marvel_characters.util.Resource
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
-class MarvelRepositoryImpl(private val remoteDatasource: RemoteDatasource , private val localDatasource: LocalDatasource):MarvelRepository {
+class MarvelRepositoryImpl(
+    private val remoteDatasource: RemoteDatasource,
+    private val localDatasource: LocalDatasource
+) : MarvelRepository {
     override suspend fun getAllCharacters(offset: Int?): Resource<MarvelApiResponse> {
         return convertResponseToResource(remoteDatasource.getAllCharacters(offset))
     }
@@ -23,7 +26,7 @@ class MarvelRepositoryImpl(private val remoteDatasource: RemoteDatasource , priv
     }
 
     override suspend fun getCharacterComics(characterId: Int): Resource<ComicResponse> {
-      return convertResponseToResource(remoteDatasource.getCharacterComics(characterId))
+        return convertResponseToResource(remoteDatasource.getCharacterComics(characterId))
     }
 
     override suspend fun getCharacterSeries(characterId: Int): Resource<SeriesResponse> {
@@ -31,11 +34,23 @@ class MarvelRepositoryImpl(private val remoteDatasource: RemoteDatasource , priv
     }
 
     override suspend fun getCharacterEvents(characterId: Int): Resource<EventsResponse> {
-      return convertResponseToResource(remoteDatasource.getCharacterEvents(characterId))
+        return convertResponseToResource(remoteDatasource.getCharacterEvents(characterId))
     }
 
     override suspend fun getCharacterStories(characterId: Int): Resource<StoriesResponse> {
-       return convertResponseToResource(remoteDatasource.getCharacterStories(characterId))
+        return convertResponseToResource(remoteDatasource.getCharacterStories(characterId))
+    }
+
+    override suspend fun searchCharacterNameToStartWith(
+        query: String,
+        offset: Int?
+    ): Resource<MarvelApiResponse> {
+        return convertResponseToResource(
+            remoteDatasource.searchCharacterNameToStartWith(
+                query,
+                offset
+            )
+        )
     }
 
     override suspend fun saveFavoriteCharacter() {
@@ -43,16 +58,16 @@ class MarvelRepositoryImpl(private val remoteDatasource: RemoteDatasource , priv
     }
 
     override suspend fun saveAllCharacters(characters: List<MarvelCharacter>) {
-      return localDatasource.saveAllCharacters(characters)
+        return localDatasource.saveAllCharacters(characters)
     }
 
     override fun getAllSavedCharacters(): Flow<List<MarvelCharacter>> {
-       return localDatasource.getAllSavedCharacters()
+        return localDatasource.getAllSavedCharacters()
     }
 
-    private fun <T> convertResponseToResource(response:Response<T>): Resource<T> {
-        if(response.isSuccessful){
-            response.body()?.let {result->
+    private fun <T> convertResponseToResource(response: Response<T>): Resource<T> {
+        if (response.isSuccessful) {
+            response.body()?.let { result ->
                 return Resource.Success(result)
             }
         }

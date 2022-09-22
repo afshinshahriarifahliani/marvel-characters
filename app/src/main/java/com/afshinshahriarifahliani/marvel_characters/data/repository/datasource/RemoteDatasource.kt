@@ -14,4 +14,5 @@ interface RemoteDatasource {
     suspend fun getCharacterSeries(characterId:Int):Response<SeriesResponse>
     suspend fun getCharacterEvents(characterId:Int):Response<EventsResponse>
     suspend fun getCharacterStories(characterId:Int):Response<StoriesResponse>
+    suspend fun searchCharacterNameToStartWith(query:String,offset: Int?):Response<MarvelApiResponse>
 }

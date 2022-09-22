@@ -22,7 +22,8 @@ class FactoryModule {
         getCharacterComicsUseCase: GetCharacterComicsUseCase,
         getCharacterSeriesUseCase: GetCharacterSeriesUseCase,
         getCharacterEventsUseCase: GetCharacterEventsUseCase,
-        getCharacterStoriesUseCase: GetCharacterStoriesUseCase
+        getCharacterStoriesUseCase: GetCharacterStoriesUseCase,
+        searchCharacterNameToStartWithUseCase:SearchCharacterNameToStartWithUseCase
     ): MarvelViewModelFactory {
         return MarvelViewModelFactory(
             app,
@@ -31,7 +32,8 @@ class FactoryModule {
             getCharacterComicsUseCase,
             getCharacterSeriesUseCase,
             getCharacterEventsUseCase,
-            getCharacterStoriesUseCase
+            getCharacterStoriesUseCase,
+            searchCharacterNameToStartWithUseCase
         )
     }
 }

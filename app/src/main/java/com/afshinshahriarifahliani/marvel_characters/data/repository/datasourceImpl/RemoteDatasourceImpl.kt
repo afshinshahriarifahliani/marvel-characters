@@ -33,4 +33,8 @@ class RemoteDatasourceImpl(private val marvelApiService: MarvelApiService):Remot
     override suspend fun getCharacterStories(characterId: Int): Response<StoriesResponse> {
        return marvelApiService.getCharacterStories(characterId)
     }
+
+    override suspend fun searchCharacterNameToStartWith(query: String,offset: Int?): Response<MarvelApiResponse> {
+        return marvelApiService.searchCharacterNameToStartWith(query,offset)
+    }
 }

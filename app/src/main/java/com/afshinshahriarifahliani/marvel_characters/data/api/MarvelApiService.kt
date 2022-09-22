@@ -46,7 +46,7 @@ interface MarvelApiService {
     ): Response<EventsResponse>
 
     @GET("characters")
-    suspend fun searchCharacter(
+    suspend fun searchCharacterNameToStartWith(
         @Query("nameStartsWith") query: String,
         @Query("offset") offset: Int? = 0,
         @Query("limit") limit: Int? = 20
