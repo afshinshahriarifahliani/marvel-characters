@@ -43,10 +43,10 @@ android {
 dependencies {
 
     def lifecycle_version = "2.5.1"
-    def glide_version = "4.12.0"
+    def glide_version = "4.13.2"
     def retrofit_version = "2.9.0"
     def interceptor_version = "4.10.0"
-
+    def room_version = "2.4.3"
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
@@ -55,6 +55,13 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation 'com.google.code.gson:gson:2.9.1'
     implementation 'org.chromium.net:cronet-embedded:105.5195.68'
+
+    //Room Library to handle database system
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
     //Android Navigation Architecture
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
@@ -80,6 +87,7 @@ dependencies {
     //Logging Interceptor to monitor and handle Http requests
     implementation "com.squareup.okhttp3:logging-interceptor:$interceptor_version"
 
+    implementation 'com.squareup.picasso:picasso:2.8'
     // Glide Library to handle loading images from Api
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"

@@ -1,7 +1,7 @@
 package com.afshinshahriarifahliani.marvel_characters.presentation.di
 
 import android.app.Application
-import com.afshinshahriarifahliani.marvel_characters.domain.usecase.GetAllCharactersUseCase
+import com.afshinshahriarifahliani.marvel_characters.domain.usecase.*
 import com.afshinshahriarifahliani.marvel_characters.presentation.viewmodel.MarvelViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -17,8 +17,21 @@ class FactoryModule {
     @Provides
     fun provideMarvelViewModelFactory(
         app: Application,
-        getAllCharactersUseCase: GetAllCharactersUseCase
+        getAllCharactersUseCase: GetAllCharactersUseCase,
+        getSingleCharacterByIdUseCase: GetSingleCharacterByIdUseCase,
+        getCharacterComicsUseCase: GetCharacterComicsUseCase,
+        getCharacterSeriesUseCase: GetCharacterSeriesUseCase,
+        getCharacterEventsUseCase: GetCharacterEventsUseCase,
+        getCharacterStoriesUseCase: GetCharacterStoriesUseCase
     ): MarvelViewModelFactory {
-        return MarvelViewModelFactory(app, getAllCharactersUseCase)
+        return MarvelViewModelFactory(
+            app,
+            getAllCharactersUseCase,
+            getSingleCharacterByIdUseCase,
+            getCharacterComicsUseCase,
+            getCharacterSeriesUseCase,
+            getCharacterEventsUseCase,
+            getCharacterStoriesUseCase
+        )
     }
 }

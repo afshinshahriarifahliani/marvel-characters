@@ -3,6 +3,7 @@ package com.afshinshahriarifahliani.marvel_characters.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.widget.ImageView
@@ -15,7 +16,7 @@ import java.math.BigInteger
 import java.security.MessageDigest
 const val LIMIT = 20
 const val OFFSET= 0
-
+const val DATABASE="marvel_db"
 //hash - a md5 digest of the ts parameter, your private key and your public key (e.g. md5(ts+privateKey+publicKey)
 fun digest(ts: String, apiKey: String, priKey: String): String {
     val text = (ts + priKey + apiKey).toByteArray()
@@ -83,6 +84,6 @@ fun ImageView.loadImage(uri: String?, circularProgressDrawable: CircularProgress
         .error(R.drawable.no_image)
     Glide.with(context)
         .setDefaultRequestOptions(options)
-        .load(uri)
+        .load(Uri.parse(uri))
         .into(this)
 }

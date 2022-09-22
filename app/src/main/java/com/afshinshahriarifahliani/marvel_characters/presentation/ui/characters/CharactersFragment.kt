@@ -1,7 +1,6 @@
 package com.afshinshahriarifahliani.marvel_characters.presentation.ui.characters
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,19 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afshinshahriarifahliani.marvel_characters.MainActivity
 import com.afshinshahriarifahliani.marvel_characters.R
-import com.afshinshahriarifahliani.marvel_characters.util.LIMIT
-import com.afshinshahriarifahliani.marvel_characters.util.OFFSET
-import com.afshinshahriarifahliani.marvel_characters.util.Resource
 import com.afshinshahriarifahliani.marvel_characters.databinding.FragmentCharactersBinding
 import com.afshinshahriarifahliani.marvel_characters.presentation.adapter.CharacterAdapter
 import com.afshinshahriarifahliani.marvel_characters.presentation.viewmodel.MarvelViewModel
+import com.afshinshahriarifahliani.marvel_characters.util.LIMIT
+import com.afshinshahriarifahliani.marvel_characters.util.OFFSET
+import com.afshinshahriarifahliani.marvel_characters.util.Resource
 
 class CharactersFragment : Fragment() {
 
     private var _binding: FragmentCharactersBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var marvelViewModel: MarvelViewModel
@@ -63,12 +59,19 @@ class CharactersFragment : Fragment() {
                 putSerializable("selected_character", it)
             }
             findNavController().navigate(
-                R.id.action_navigation_characters_to_navigation_character_info,
+                R.id.action_navigation_characters_to_navigation_character_details,
                 bundle
             )
         }
         initRecyclerView()
         viewCharactersList()
+        val swipe = binding.swipeToRefresh
+        swipe.setOnRefreshListener {
+            offset += LIMIT
+            viewCharactersList()
+            swipe.isRefreshing = false
+        }
+
         //   setSearchView()
     }
 
@@ -80,7 +83,6 @@ class CharactersFragment : Fragment() {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let {
-                        Log.i("MYTAG", "came here ${it.data.characters.toList().size}")
                         characterAdapter.swapData(it.data.characters.toList())
                         pages = if (it.data.total % LIMIT == 0) {
                             it.data.total / LIMIT

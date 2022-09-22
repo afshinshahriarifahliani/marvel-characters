@@ -10,8 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:background="@color/cardView_background"
+        android:layout_height="150dp"
         android:padding="10dp">
 
         <androidx.cardview.widget.CardView
@@ -40,9 +39,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:ellipsize="end"
-            android:fontFamily="@font/lobster_two"
+            android:fontFamily="@font/actor"
             android:maxLines="1"
-            android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/favorite_button"
@@ -55,10 +53,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="@font/lobster_two"
+            android:fontFamily="@font/actor"
             android:maxLines="3"
-            android:textColor="@color/white"
             android:textSize="15sp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/character_name"
             app:layout_constraintTop_toBottomOf="@+id/character_name"
@@ -68,8 +66,7 @@
             android:id="@+id/character_comics_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lobster_two"
-            android:textColor="@color/white"
+            android:fontFamily="@font/actor"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/character_series_value"
             app:layout_constraintStart_toStartOf="@id/character_description"
@@ -79,8 +76,7 @@
             android:id="@+id/character_series_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lobster_two"
-            android:textColor="@color/white"
+            android:fontFamily="@font/actor"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/character_description"
@@ -90,8 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/lobster_two"
-            android:textColor="@color/white"
+            android:fontFamily="@font/actor"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/character_events_value"
             app:layout_constraintStart_toEndOf="@+id/character_comics_value"
@@ -100,8 +95,7 @@
             android:id="@+id/character_events_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lobster_two"
-            android:textColor="@color/white"
+            android:fontFamily="@font/actor"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/character_stories_value"
@@ -116,7 +110,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,6 +1,7 @@
 package com.afshinshahriarifahliani.marvel_characters.presentation.di
 
 import com.afshinshahriarifahliani.marvel_characters.data.repository.MarvelRepositoryImpl
+import com.afshinshahriarifahliani.marvel_characters.data.repository.datasource.LocalDatasource
 import com.afshinshahriarifahliani.marvel_characters.data.repository.datasource.RemoteDatasource
 import com.afshinshahriarifahliani.marvel_characters.domain.repository.MarvelRepository
 import dagger.Module
@@ -15,7 +16,7 @@ class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideMarvelRepository(remoteDatasource: RemoteDatasource): MarvelRepository {
-        return MarvelRepositoryImpl(remoteDatasource)
+    fun provideMarvelRepository(remoteDatasource: RemoteDatasource , localDatasource: LocalDatasource): MarvelRepository {
+        return MarvelRepositoryImpl(remoteDatasource,localDatasource)
     }
 }

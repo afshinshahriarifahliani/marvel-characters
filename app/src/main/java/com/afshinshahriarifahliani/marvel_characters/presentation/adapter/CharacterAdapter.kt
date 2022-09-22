@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.afshinshahriarifahliani.marvel_characters.R
-import com.afshinshahriarifahliani.marvel_characters.data.model.MarvelCharacter
+import com.afshinshahriarifahliani.marvel_characters.data.model.characters.MarvelCharacter
 import com.afshinshahriarifahliani.marvel_characters.util.getCircularProgress
 import com.afshinshahriarifahliani.marvel_characters.util.loadImage
 import com.afshinshahriarifahliani.marvel_characters.databinding.CharacterCardviewBinding
@@ -55,7 +55,7 @@ class CharacterAdapter :
             binding.apply {
 
                 characterThumbnail.loadImage(
-                    character.thumbnail.path + "/portrait_small." + character.thumbnail.extension,
+                    character.thumbnail.path + "/portrait_large." + character.thumbnail.extension,
                     getCircularProgress(characterThumbnail.context)
                 )
 

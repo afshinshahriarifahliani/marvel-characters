@@ -11,8 +11,8 @@
         android:label="@string/title_characters"
         tools:layout="@layout/fragment_characters">
         <action
-            android:id="@+id/action_navigation_characters_to_navigation_character_info"
-            app:destination="@id/navigation_character_info" />
+            android:id="@+id/action_navigation_characters_to_navigation_character_details"
+            app:destination="@id/navigation_character_details" />
     </fragment>
 
     <fragment
@@ -20,14 +20,35 @@
         android:name="com.afshinshahriarifahliani.marvel_characters.presentation.ui.comics.ComicsFragment"
         android:label="@string/title_comics"
         tools:layout="@layout/fragment_comics" />
-
+    <fragment
+        android:id="@+id/navigation_series"
+        android:name="com.afshinshahriarifahliani.marvel_characters.presentation.ui.series.SeriesFragment"
+        android:label="@string/title_series"
+        tools:layout="@layout/fragment_series" />
+    <fragment
+        android:id="@+id/navigation_events"
+        android:name="com.afshinshahriarifahliani.marvel_characters.presentation.ui.events.EventsFragment"
+        android:label="@string/title_events"
+        tools:layout="@layout/fragment_events" />
+    <fragment
+        android:id="@+id/navigation_stories"
+        android:name="com.afshinshahriarifahliani.marvel_characters.presentation.ui.stories.StoriesFragment"
+        android:label="@string/title_stories"
+        tools:layout="@layout/fragment_stories" />
     <fragment
         android:id="@+id/navigation_character_info"
         android:name="com.afshinshahriarifahliani.marvel_characters.presentation.ui.characterInfo.CharacterInfoFragment"
         android:label="@string/title_character_info"
         tools:layout="@layout/fragment_character_info">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_character_details"
+        android:name="com.afshinshahriarifahliani.marvel_characters.presentation.ui.characterDetails.CharacterDetailsFragment"
+        android:label="@string/title_character_details"
+        tools:layout="@layout/fragment_character_details">
         <argument
             android:name="selected_character"
-            app:argType="com.afshinshahriarifahliani.marvel_characters.data.model.MarvelCharacter" />
+            app:argType="com.afshinshahriarifahliani.marvel_characters.data.model.characters.MarvelCharacter" />
     </fragment>
 </navigation>

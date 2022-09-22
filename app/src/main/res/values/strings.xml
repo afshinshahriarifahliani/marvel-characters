@@ -2,5 +2,17 @@
     <string name="app_name">marvel-characters</string>
     <string name="title_characters">Characters</string>
     <string name="title_comics">Comics</string>
-    <string name="title_character_info">Character Details</string>
+    <string name="title_series">Series</string>
+    <string name="title_events">Events</string>
+    <string name="title_stories">Stories</string>
+    <string name="title_character_details">Character Details</string>
+    <string name="title_character_info">Character Info</string>
+
+    <string-array name="tab_names">
+        <item>Details</item>
+        <item>Comics</item>
+        <item>Series</item>
+        <item>Stories</item>
+        <item>Events</item>
+    </string-array>
 </resources>

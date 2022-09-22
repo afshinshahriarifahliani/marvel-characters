@@ -1,6 +1,6 @@
 package com.afshinshahriarifahliani.marvel_characters.domain.usecase
 
-import com.afshinshahriarifahliani.marvel_characters.data.model.MarvelApiResponse
+import com.afshinshahriarifahliani.marvel_characters.data.model.characters.MarvelApiResponse
 import com.afshinshahriarifahliani.marvel_characters.util.Resource
 import com.afshinshahriarifahliani.marvel_characters.domain.repository.MarvelRepository
 
