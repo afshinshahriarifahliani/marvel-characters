@@ -13,10 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afshinshahriarifahliani.marvel_characters.MainActivity
-import com.afshinshahriarifahliani.marvel_characters.R
 import com.afshinshahriarifahliani.marvel_characters.databinding.FragmentCharactersBinding
 import com.afshinshahriarifahliani.marvel_characters.presentation.adapter.CharacterAdapter
-import com.afshinshahriarifahliani.marvel_characters.presentation.ui.favorites.FavoritesFragmentDirections
 import com.afshinshahriarifahliani.marvel_characters.presentation.viewmodel.MarvelViewModel
 import com.afshinshahriarifahliani.marvel_characters.util.LIMIT
 import com.afshinshahriarifahliani.marvel_characters.util.OFFSET
@@ -59,7 +57,10 @@ class CharactersFragment : Fragment() {
         marvelViewModel = (activity as MainActivity).marvelViewModel
         characterAdapter = (activity as MainActivity).characterAdapter
         characterAdapter.setOnItemClickListener {
-            val action = CharactersFragmentDirections.actionNavigationCharactersToNavigationCharacterDetails(it)
+            val action =
+                CharactersFragmentDirections.actionNavigationCharactersToNavigationCharacterDetails(
+                    it
+                )
             findNavController().navigate(action)
         }
         initRecyclerView()
@@ -156,20 +157,25 @@ class CharactersFragment : Fragment() {
         binding.characterSearchView.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    marvelViewModel.searchCharacterNameToStartWithUseCase(query.toString(), OFFSET)
-                    viewCharacterSearchedResult()
-                    return false
+                    if(query!=null){
+                        marvelViewModel.searchCharacterNameToStartWithUseCase(query.toString(), OFFSET)
+                        viewCharacterSearchedResult()
+                    }
+                   return false
                 }
 
                 override fun onQueryTextChange(query: String?): Boolean {
-                    lifecycleScope.launchWhenCreated {
-                        delay(2000)
-                        marvelViewModel.searchCharacterNameToStartWithUseCase(
-                            query.toString(),
-                            OFFSET
-                        )
-                        viewCharacterSearchedResult()
+                    if(query!=null){
+                        lifecycleScope.launchWhenCreated{
+                            delay(2000)
+                            marvelViewModel.searchCharacterNameToStartWithUseCase(
+                                query.toString(),
+                                OFFSET
+                            )
+                            viewCharacterSearchedResult()
+                        }
                     }
+
                     return false
                 }
             })

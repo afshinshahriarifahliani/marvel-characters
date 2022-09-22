@@ -3,12 +3,12 @@ package com.afshinshahriarifahliani.marvel_characters.data.model.characters
 
 import android.os.Parcelable
 import androidx.room.*
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "characters_table")
 data class MarvelCharacter(
-    @PrimaryKey()
+    @PrimaryKey
     var id: Int = 0,
     var name: String = "",
     var description: String = "",

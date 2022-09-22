@@ -45,6 +45,10 @@ class MarvelViewModel(
         MutableLiveData()
     val characterSearchResult: LiveData<Resource<MarvelApiResponse>> = _characterSearchResult
 
+    fun addToFavorites(character: MarvelCharacter) = viewModelScope.launch(Dispatchers.IO) {
+        saveFavoriteCharacterUseCase.execute(character)
+    }
+
     fun getAllSavedCharacters() = liveData{
         getAllSavedCharactersUseCase.execute().collect {
             emit(it)
@@ -170,9 +174,4 @@ class MarvelViewModel(
         }
 
     }
-
-    fun addToFavorites(character: MarvelCharacter) = viewModelScope.launch(Dispatchers.IO) {
-        saveFavoriteCharacterUseCase.execute(character)
-    }
-
 }

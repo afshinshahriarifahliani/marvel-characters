@@ -57,7 +57,6 @@ class ItemDetailsAdapter :
                         item.thumbnail.path + "/portrait_medium." + item.thumbnail.extension,
                         getCircularProgress(itemImage.context)
                     )
-
                 }
 
                 itemName.text = item.title

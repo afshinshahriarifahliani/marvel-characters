@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.afshinshahriarifahliani.marvel_characters.MainActivity
 import com.afshinshahriarifahliani.marvel_characters.databinding.FragmentComicsBinding
 import com.afshinshahriarifahliani.marvel_characters.presentation.adapter.ItemDetailsAdapter
 import com.afshinshahriarifahliani.marvel_characters.presentation.viewmodel.MarvelViewModel
 import com.afshinshahriarifahliani.marvel_characters.util.Resource
+import kotlinx.coroutines.delay
 
 class ComicsFragment(private val characterId: Int) : Fragment() {
 
@@ -32,7 +34,7 @@ class ComicsFragment(private val characterId: Int) : Fragment() {
         marvelViewModel = (activity as MainActivity).marvelViewModel
         comicsAdapter = (activity as MainActivity).itemDetailsAdapter
 
-
+        viewComics()
         initRecyclerView()
         viewComics()
         return root
@@ -46,6 +48,7 @@ class ComicsFragment(private val characterId: Int) : Fragment() {
                     hideProgressBar()
                     response.data?.let {
                         comicsAdapter.swapData(it.data.results.toList())
+
                     }
                 }
                 is Resource.Error -> {

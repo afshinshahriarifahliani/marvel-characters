@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.afshinshahriarifahliani.marvel_characters.MainActivity
 import com.afshinshahriarifahliani.marvel_characters.R
 import com.afshinshahriarifahliani.marvel_characters.databinding.FragmentCharactersBinding
 import com.afshinshahriarifahliani.marvel_characters.presentation.adapter.CharacterAdapter
 import com.afshinshahriarifahliani.marvel_characters.presentation.viewmodel.MarvelViewModel
 import com.afshinshahriarifahliani.marvel_characters.util.LIMIT
+import com.google.android.material.snackbar.Snackbar
 
 class FavoritesFragment : Fragment() {
 
@@ -57,7 +60,37 @@ class FavoritesFragment : Fragment() {
             swipe.isRefreshing = false
         }
 
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
 
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.absoluteAdapterPosition
+                val character = characterAdapter.currentList[position]
+                marvelViewModel.deleteArticle(character)
+                Snackbar.make(view,"Deleted Successfully", Snackbar.LENGTH_LONG)
+                    .apply {
+                        setAction("Undo"){
+                            marvelViewModel.addToFavorites(character)
+                        }
+                        show()
+                    }
+
+            }
+
+        }
+
+        ItemTouchHelper(itemTouchHelperCallback).apply {
+            attachToRecyclerView(binding.characterRecyclerView)
+        }
     }
 
     private fun viewSavedCharactersList() {
